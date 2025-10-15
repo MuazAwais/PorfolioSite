@@ -1,4 +1,4 @@
-import { ButtonPrimary } from "../../components/ui/button/button"
+import { ButtonOutline, ButtonPrimary } from "../../components/ui/button/button"
 
 
 
@@ -37,7 +37,10 @@ const Hero = () => {
                 icon={"download"}
               />
             
-              ButtonOutline
+              <ButtonOutline 
+              label="Scroll Down"
+              href="#about"
+              icon={"arrow_downward"}/>
             </div>
         </div>
 

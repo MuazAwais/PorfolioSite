@@ -62,7 +62,7 @@ const ButtonOutline = ({
       )
   }else{
     return (
-        <button className={"btn btn-primary " + classes}>
+        <button className={"btn btn-outline " + classes}>
             {label}
           {icon ? 
           <span className='material-symbols-rounded' aria-hidden="true">{icon}</span>: undefined
