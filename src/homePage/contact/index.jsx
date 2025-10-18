@@ -1,4 +1,5 @@
-
+import emailjs from '@emailjs/browser';
+import {useState } from 'react';
 
 const socialLinks = [
     {
@@ -33,8 +34,48 @@ const socialLinks = [
 
 
 const Contact = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    const templateParms ={
+      name : name,
+      email : email,
+      message : message,
+      time : Date(),
+    }
+
+    const serviceId = 'service_bc06qhi'
+    const templateId = 'template_2fs91ut'
+    const publicId = 'swbxD5a4HVDezY7Zx'
+
+
+    emailjs
+      .send(serviceId, templateId, templateParms, {
+      publicKey: publicId,   
+      })
+      
+      .then(
+        () => {
+          console.log('SUCCESS!');
+          
+        },
+        (error) => {
+          console.log('FAILED...', error.text);
+        },
+      );
+      setName("")
+      setEmail("")
+      setMessage("")
+      
+  };
+
+
   return (
-    <section className="section" id="contact">
+    <section className="section" id="contact" onSubmit={sendEmail}>
         <div className="container lg:grid lg:grid-cols-2 lg:items-stretch">
 
             <div className="mb-12 lg:mb-0 lg:flex lg:flex-col">
@@ -53,26 +94,26 @@ const Contact = () => {
                 </div>
             </div>
 
-            <form action="https://muazawais1947.getform.com/28zr4" method="POST" className="xl:pl-10 2xl:pl-20">
+            <form className="xl:pl-10 2xl:pl-20" >
                 <div className="md:grid md:items-center md:grid-cols-2 md:gap-2">
                     <div className="mb-4">
                         <label htmlFor="name" className="label">
                             Name
                         </label>
                         <input type="text" name="name" id="name" autoComplete="name" required
-                        placeholder="Full Name" className="text-field" />
+                        placeholder="Full Name" className="text-field" value={name} onChange={(e)=>setName(e.target.value)}/>
                     </div>
                     <div className="mb-4">
                         <label htmlFor="email" className="label">
                             Email
                         </label>
                         <input type="email" name="email" id="email" autoComplete="email" required
-                        placeholder="example@mail.xyz" className="text-field" />
+                        placeholder="example@mail.xyz" className="text-field" value={email} onChange={(e)=>setEmail(e.target.value)} />
                     </div>
                 </div>
                     <div className="mb-4">
                         <label htmlFor="message" className="label">Message</label>
-                        <textarea name="message" id="message" placeholder="Hi!" required className="text-field resize-y min-h-32 max-h-80"></textarea>
+                        <textarea name="message" id="message" placeholder="Hi!" required className="text-field resize-y min-h-32 max-h-80" value={message} onChange={(e)=>setMessage(e.target.value)}></textarea>
                     </div>
                     <button type="submit" className="btn btn-primary [&]:max-w-full w-full justify-center">Submit</button>
                 
