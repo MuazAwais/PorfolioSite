@@ -9,6 +9,12 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "overrides": {
+    "react-helmet-async": {
+      "react": "^19.1.1",
+      "react-dom": "^19.1.1"
+    }
+  },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "@sanity/client": "^7.13.2",
