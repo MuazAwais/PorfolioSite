@@ -47,7 +47,7 @@ const Hero = () => {
         <div className="hidden lg:block">
           <figure className="w-full max-w-[480px] ml-auto bg-gradient-to-t from-sky-400 via-25% via-sky-400 to-65%  rounded-[60px] overflow-hidden">
             <img 
-            src="https://res.cloudinary.com/dv8dtipj1/image/upload/v1760465198/bgre_ntkvdu.png" 
+            src="https://res.cloudinary.com/dv8dtipj1/image/upload/f_auto,q_auto/v1760465198/bgre_ntkvdu.png" 
             width={656}
             height={800}
             alt="Muaz Awais"

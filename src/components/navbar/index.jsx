@@ -13,15 +13,18 @@ const Header = ()  => {
         <h1>
           <a href="/"
           className='logo'>
-            <img src="https://res.cloudinary.com/dv8dtipj1/image/upload/v1760427253/freepik-gradient-developers-coding-logo-20251014073346jVVI_uch196.png" width={40}
-            height={40} alt="logo" />
+            <img src="https://res.cloudinary.com/dv8dtipj1/image/upload/f_auto,q_auto/v1760427253/freepik-gradient-developers-coding-logo-20251014073346jVVI_uch196.png" width={40}
+            height={40} alt="Muaz Awais - Home" />
           </a>
         </h1>
 
         <div className='relative md:justify-self-center'>
           <button
           className='menu-btn md:hidden'
-          onClick={() => setNavOpen((prev) => !prev)}>
+          onClick={() => setNavOpen((prev) => !prev)}
+          aria-label="Toggle menu"
+          aria-expanded={navOpen}
+          >
               <span className='material-symbols-rounded'>
                {navOpen ? 'close' : 'menu'}
               </span>

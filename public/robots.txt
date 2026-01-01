@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://porfolio-site-beta.vercel.app/sitemap.xml

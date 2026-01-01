@@ -1,28 +1,29 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ProjectCard from './projectCard';
+import { client } from '../../sanityClient';
 
 
-const works = [
+const fallbackWorks = [
   {
-    imgSrc: 'https://res.cloudinary.com/dv8dtipj1/image/upload/v1760475579/Untitled_design_3_mtueht.png',
+    imgSrc: 'https://res.cloudinary.com/dv8dtipj1/image/upload/f_auto,q_auto/v1760475579/Untitled_design_3_mtueht.png',
     title: 'Persnol Portfolio',
     tags: ['React', 'Development','Tailwind'],
     projectLink: 'https://porfolio-site-beta.vercel.app/'
   },
   {
-    imgSrc: 'https://res.cloudinary.com/dv8dtipj1/image/upload/v1760475580/Untitled_design_2_kviy9i.png',
+    imgSrc: 'https://res.cloudinary.com/dv8dtipj1/image/upload/f_auto,q_auto/v1760475580/Untitled_design_2_kviy9i.png',
     title: 'E-Learning Site',
     tags: ['Shadcn', 'React', 'Api','Tailwind'],
     projectLink: 'https://learn-engine-fawn.vercel.app/'
   },
   {
-    imgSrc: 'https://res.cloudinary.com/dv8dtipj1/image/upload/v1760475580/Untitled_design_1_qkldep.png',
+    imgSrc: 'https://res.cloudinary.com/dv8dtipj1/image/upload/f_auto,q_auto/v1760475580/Untitled_design_1_qkldep.png',
     title: 'Car Bloging Site',
     tags: ['Development', 'React','Tailwind','Shadcn'],
     projectLink: 'https://car-blogging-site.vercel.app/'
   },
   {
-    imgSrc: 'https://res.cloudinary.com/dv8dtipj1/image/upload/v1760475580/Untitled_design_wevic7.png',
+    imgSrc: 'https://res.cloudinary.com/dv8dtipj1/image/upload/f_auto,q_auto/v1760475580/Untitled_design_wevic7.png',
     title: 'Bakery Site',
     tags: ['Web-design', 'Development','HTML','CSS'],
     projectLink: 'https://my-project-sage-five.vercel.app/'
@@ -32,6 +33,22 @@ const works = [
 
 
 const Work = () => {
+  const [works, setWorks] = useState(fallbackWorks);
+
+  useEffect(() => {
+    // Only fetch if project ID is defined to avoid errors in dev before setup
+    if (import.meta.env.VITE_SANITY_PROJECT_ID) {
+      const query = '*[_type == "project"]{title, "imgSrc": image.asset->url, tags, projectLink}';
+      client.fetch(query)
+        .then((data) => {
+          if (data && data.length > 0) {
+            setWorks(data);
+          }
+        })
+        .catch(console.error);
+    }
+  }, []);
+
   return (
     <section id='work' className="section">
       <div className="container">
