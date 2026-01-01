@@ -1,7 +1,9 @@
+import { useEffect, useState } from "react";
 import SkillCard from "./skillCard";
+import { client } from "../../sanityClient";
 
 
-const skillItem = [
+const fallbackSkills = [
     {
       imgSrc: 'https://res.cloudinary.com/dv8dtipj1/image/upload/v1760471240/figma_yb1egf.svg',
       label: 'Figma',
@@ -31,6 +33,20 @@ const skillItem = [
 
 
 const Skill = () => {
+  const [skills, setSkills] = useState(fallbackSkills);
+
+  useEffect(() => {
+    if (import.meta.env.VITE_SANITY_PROJECT_ID) {
+      const query = '*[_type == "skill"]{label, desc, "imgSrc": image.asset->url}';
+      client.fetch(query)
+        .then((data) => {
+          if (data && data.length > 0) {
+            setSkills(data);
+          }
+        })
+        .catch(console.error);
+    }
+  }, []);
 
   return (
     <section className="section">
@@ -46,7 +62,7 @@ const Skill = () => {
 
             <div className="grid gap-3 grid-cols-[repeat(auto-fill,_minmax(250px,_1fr))]">
                 {
-                    skillItem.map(({ imgSrc, label, desc}, key)=>(
+                    skills.map(({ imgSrc, label, desc}, key)=>(
                         <SkillCard
                         key={key}
                             imgSrc={imgSrc}

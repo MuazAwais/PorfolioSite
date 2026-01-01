@@ -82,10 +82,10 @@ function Footer() {
 
 
         <div className="flex items-center justify-between pt-10 mb-8">
-          <a href="" 
+          <a href="/" 
           className=""
           >
-            <img src="https://res.cloudinary.com/dv8dtipj1/image/upload/v1760427253/freepik-gradient-developers-coding-logo-20251014073346jVVI_uch196.png" width={40} height={40} alt="logo" className="" />
+            <img src="https://res.cloudinary.com/dv8dtipj1/image/upload/v1760427253/freepik-gradient-developers-coding-logo-20251014073346jVVI_uch196.png" width={40} height={40} alt="Muaz Awais - Home" className="" />
           </a>
 
           <p className="text-zinc-500 text-sm">

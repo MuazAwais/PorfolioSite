@@ -1,5 +1,6 @@
 import emailjs from '@emailjs/browser';
 import {useState } from 'react';
+import toast from 'react-hot-toast';
 
 const socialLinks = [
     {
@@ -37,9 +38,17 @@ const Contact = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const sendEmail = (e) => {
     e.preventDefault();
+
+    if (!name || !email || !message) {
+      toast.error("Please fill in all fields.");
+      return;
+    }
+
+    setLoading(true);
 
     const templateParms ={
       name : name,
@@ -48,9 +57,9 @@ const Contact = () => {
       time : Date(),
     }
 
-    const serviceId = 'service_bc06qhi'
-    const templateId = 'template_2fs91ut'
-    const publicId = 'swbxD5a4HVDezY7Zx'
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicId = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 
     emailjs
@@ -60,22 +69,25 @@ const Contact = () => {
       
       .then(
         () => {
-          console.log('SUCCESS!');
-          
+          toast.success('Message sent successfully!');
+          setName("");
+          setEmail("");
+          setMessage("");
         },
         (error) => {
           console.log('FAILED...', error.text);
+          toast.error("Failed to send message. Please try again.");
         },
-      );
-      setName("")
-      setEmail("")
-      setMessage("")
+      )
+      .finally(() => {
+        setLoading(false);
+      });
       
   };
 
 
   return (
-    <section className="section" id="contact" onSubmit={sendEmail}>
+    <section className="section" id="contact">
         <div className="container lg:grid lg:grid-cols-2 lg:items-stretch">
 
             <div className="mb-12 lg:mb-0 lg:flex lg:flex-col">
@@ -94,7 +106,7 @@ const Contact = () => {
                 </div>
             </div>
 
-            <form className="xl:pl-10 2xl:pl-20" >
+            <form className="xl:pl-10 2xl:pl-20" onSubmit={sendEmail}>
                 <div className="md:grid md:items-center md:grid-cols-2 md:gap-2">
                     <div className="mb-4">
                         <label htmlFor="name" className="label">
@@ -115,7 +127,9 @@ const Contact = () => {
                         <label htmlFor="message" className="label">Message</label>
                         <textarea name="message" id="message" placeholder="Hi!" required className="text-field resize-y min-h-32 max-h-80" value={message} onChange={(e)=>setMessage(e.target.value)}></textarea>
                     </div>
-                    <button type="submit" className="btn btn-primary [&]:max-w-full w-full justify-center">Submit</button>
+                    <button type="submit" disabled={loading} className="btn btn-primary [&]:max-w-full w-full justify-center">
+                        {loading ? "Sending..." : "Submit"}
+                    </button>
                 
                 
             </form>        
