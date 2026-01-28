@@ -10,10 +10,8 @@
     "preview": "vite preview"
   },
   "overrides": {
-    "react-helmet-async": {
-      "react": "^19.1.1",
-      "react-dom": "^19.1.1"
-    }
+    "react": "$react",
+    "react-dom": "$react-dom"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
